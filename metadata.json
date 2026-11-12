@@ -1,0 +1,6 @@
+{
+  "name": "GradeCraft: English Teacher Assistant",
+  "description": "All-in-one offline-first mobile app for English teachers to manage attendance, grades, lesson plans, grammar exercises, encrypted notes, widgets, and PDF parent reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="bookGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  <!-- Background with safe zone -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#334155" stroke-width="3" stroke-dasharray="6 6" opacity="0.6"/>
+  
+  <!-- Open Book Emblem -->
+  <g transform="translate(106, 126)">
+    <!-- Left Page -->
+    <path d="M150 200 C80 180 20 190 0 210 L0 50 C20 30 80 20 150 40 Z" fill="#ffffff" opacity="0.95" />
+    <path d="M20 75 L120 65 M20 105 L130 95 M20 135 L110 125 M20 165 L125 155" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+    
+    <!-- Right Page -->
+    <path d="M150 200 C220 180 280 190 300 210 L300 50 C280 30 220 20 150 40 Z" fill="#ffffff" opacity="0.9" />
+    <path d="M180 65 L280 75 M170 95 L280 105 M190 125 L280 135 M175 155 L280 165" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+    
+    <!-- Spine / Center Bookmark -->
+    <path d="M144 38 L156 38 L156 220 L150 214 L144 220 Z" fill="url(#goldGrad)" />
+    
+    <!-- Floating Quill / Star of Excellence -->
+    <circle cx="150" cy="18" r="16" fill="url(#goldGrad)"/>
+    <path d="M142 18 L158 18 M150 10 L150 26" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Teacher Grade Checkmark Badge -->
+  <g transform="translate(320, 290)">
+    <circle cx="45" cy="45" r="42" fill="#10b981" stroke="#0f172a" stroke-width="6"/>
+    <path d="M30 45 L40 55 L60 33" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

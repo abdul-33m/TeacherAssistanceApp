@@ -1,0 +1,1025 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Teacher account profile and workspace preferences stored privately per user.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the teacher."
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Teacher display name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 200,
+          "description": "Teacher email address."
+        },
+        "photoURL": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Optional avatar URL."
+        },
+        "activeAcademicYear": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 32,
+          "description": "Selected academic year label."
+        },
+        "activeClassId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Currently active class ID."
+        },
+        "isDarkMode": {
+          "type": "boolean",
+          "description": "Dark mode preference."
+        },
+        "cloudSyncKey": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Legacy backup sync key."
+        },
+        "notificationEnabled": {
+          "type": "boolean",
+          "description": "Reminder notification preference."
+        },
+        "vaultSalt": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Salt for E2EE notes vault."
+        },
+        "vaultVerifier": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Passphrase verifier hash for E2EE vault."
+        },
+        "academicYears": {
+          "type": "array",
+          "description": "Configured academic years (max 20)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp."
+        }
+      },
+      "required": ["uid", "displayName", "email", "activeAcademicYear", "activeClassId", "isDarkMode", "notificationEnabled", "createdAt", "updatedAt"]
+    },
+    "ClassGroup": {
+      "title": "ClassGroup",
+      "description": "A distinct class section such as 6A, 6B, 7A, or 7B.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "grade": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "section": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "academicYear": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 32
+        },
+        "color": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 20
+        },
+        "roomNumber": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "schedulePeriod": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "name", "grade", "section", "subject", "academicYear", "color", "createdAt", "updatedAt"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Student enrolled in a specific class section (supporting 80+ students per section).",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "classId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "rollNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "avatarColor": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "guardianName": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "guardianContact": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "accommodations": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "classId", "name", "rollNumber", "createdAt", "updatedAt"]
+    },
+    "AttendanceRecord": {
+      "title": "AttendanceRecord",
+      "description": "Daily attendance map for all students in a class on a specific date.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "classId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "date": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "records": {
+          "type": "object",
+          "description": "Map of studentId to AttendanceStatus."
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "classId", "date", "records", "createdAt", "updatedAt"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "Homework, grammar exercise, essay, quiz, or reading log assigned to a class or grade.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "classId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Homework", "Grammar Exercise", "Essay & Writing", "Quiz", "Exam", "Project", "Reading Log"]
+        },
+        "dueDate": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 20
+        },
+        "maxPoints": {
+          "type": "number"
+        },
+        "weight": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["assigned", "collected", "grading", "graded", "returned"]
+        },
+        "grammarTopic": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "bookChapter": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "createdDate": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "classId", "title", "description", "category", "dueDate", "maxPoints", "weight", "status", "createdAt", "updatedAt"]
+    },
+    "AssignmentGradesMap": {
+      "title": "AssignmentGradesMap",
+      "description": "Map of studentId to grade score, completion status, and feedback for a single assignment.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "assignmentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "entries": {
+          "type": "object",
+          "description": "Map of studentId to GradeRecord entry."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "assignmentId", "entries", "createdAt", "updatedAt"]
+    },
+    "MonthlyAssessmentsMap": {
+      "title": "MonthlyAssessmentsMap",
+      "description": "Map of studentId to monthly exam, HW, oral participation, and notes for a class and month.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "classId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "month": {
+          "type": "string",
+          "minLength": 7,
+          "maxLength": 7,
+          "pattern": "^[0-9]{4}-[0-9]{2}$"
+        },
+        "entries": {
+          "type": "object",
+          "description": "Map of studentId to MonthlyAssessmentRecord."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "classId", "month", "entries", "createdAt", "updatedAt"]
+    },
+    "ParticipationItem": {
+      "title": "ParticipationItem",
+      "description": "Daily live clicker participation scores and logs for a class.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "classId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "date": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "scores": {
+          "type": "object"
+        },
+        "logs": {
+          "type": "array"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "classId", "date", "scores", "logs", "createdAt", "updatedAt"]
+    },
+    "LessonPlan": {
+      "title": "LessonPlan",
+      "description": "Structured ELA lesson plan with grammar focus, warm-up, practice, and exit ticket.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "classId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "grade": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "date": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "durationMinutes": {
+          "type": "number"
+        },
+        "grammarFocus": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "objectives": {
+          "type": "array"
+        },
+        "materials": {
+          "type": "array"
+        },
+        "warmUp": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "directInstruction": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "guidedPractice": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "independentPractice": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "exitTicket": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "homeworkAssigned": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "teacherNotes": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "sourceType": {
+          "type": "string",
+          "enum": ["premade", "created", "uploaded_pdf", "ai"]
+        },
+        "attachmentId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "attachmentName": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "attachmentSize": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "classId", "grade", "title", "unit", "date", "durationMinutes", "grammarFocus", "objectives", "materials", "warmUp", "directInstruction", "guidedPractice", "independentPractice", "exitTicket", "completed", "createdAt", "updatedAt"]
+    },
+    "LessonProgressMap": {
+      "title": "LessonProgressMap",
+      "description": "Map of studentId to lesson mastery status, exit ticket score, and notes for a lesson.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "lessonId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "entries": {
+          "type": "object"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "lessonId", "entries", "createdAt", "updatedAt"]
+    },
+    "CumulativeProgressMap": {
+      "title": "CumulativeProgressMap",
+      "description": "Map of studentId to cumulative remarks, strengths, growth areas, and target goals for a class.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "classId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "entries": {
+          "type": "object"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "classId", "entries", "createdAt", "updatedAt"]
+    },
+    "GrammarExercise": {
+      "title": "GrammarExercise",
+      "description": "Grammar rules explanation and practice questions for Grade 6 or 7.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "grade": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "topic": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": ["beginner", "intermediate", "advanced"]
+        },
+        "rulesExplanation": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "questions": {
+          "type": "array"
+        },
+        "assignedClassIds": {
+          "type": "array"
+        },
+        "createdDate": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "grade", "title", "topic", "difficulty", "rulesExplanation", "questions", "assignedClassIds", "createdAt", "updatedAt"]
+    },
+    "BookStudy": {
+      "title": "BookStudy",
+      "description": "Novel study progress, vocabulary, and discussion prompts per class.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "classId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "author": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "totalChapters": {
+          "type": "number"
+        },
+        "currentChapter": {
+          "type": "number"
+        },
+        "genre": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "vocabulary": {
+          "type": "array"
+        },
+        "discussionQuestions": {
+          "type": "array"
+        },
+        "targetCompletionDate": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "classId", "title", "author", "totalChapters", "currentChapter", "genre", "summary", "vocabulary", "discussionQuestions", "targetCompletionDate", "createdAt", "updatedAt"]
+    },
+    "EncryptedTeacherNote": {
+      "title": "EncryptedTeacherNote",
+      "description": "AES-GCM 256 end-to-end encrypted private teacher observation note.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "studentId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "classId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "category": {
+          "type": "string",
+          "enum": ["observation", "iep_confidential", "parent_conference", "private_memo"]
+        },
+        "ciphertext": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32000
+        },
+        "iv": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "salt": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "title", "category", "ciphertext", "iv", "salt", "createdAt", "updatedAt"]
+    },
+    "Reminder": {
+      "title": "Reminder",
+      "description": "Task, exam, grading, or parent communication reminder.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "dueDate": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "classId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "category": {
+          "type": "string",
+          "enum": ["grading", "lesson_prep", "exam", "parent_call", "general"]
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "title", "dueDate", "priority", "category", "completed", "createdAt", "updatedAt"]
+    },
+    "TeacherNote": {
+      "title": "TeacherNote",
+      "description": "Teacher-authored lesson notes, pacing plans, and PDF handout metadata.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "classId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["lesson_note", "pacing_plan", "handout_pdf", "reference"]
+        },
+        "sourceType": {
+          "type": "string",
+          "enum": ["created", "uploaded_pdf"]
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 12000
+        },
+        "attachmentId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "attachmentName": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "attachmentSize": {
+          "type": "number"
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "date": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "title", "classId", "category", "sourceType", "content", "completed", "date", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private teacher profile and workspace settings."
+    },
+    "/users/{userId}/classes/{classId}": {
+      "schema": { "$ref": "#/entities/ClassGroup" },
+      "description": "Class sections (e.g. 6A, 6B, 7A, 7B) owned by the teacher."
+    },
+    "/users/{userId}/students/{studentId}": {
+      "schema": { "$ref": "#/entities/Student" },
+      "description": "Students enrolled in the teacher's classes."
+    },
+    "/users/{userId}/attendance/{recordId}": {
+      "schema": { "$ref": "#/entities/AttendanceRecord" },
+      "description": "Daily attendance records keyed by classId and date."
+    },
+    "/users/{userId}/assignments/{assignmentId}": {
+      "schema": { "$ref": "#/entities/Assignment" },
+      "description": "Assignments and homework tasks."
+    },
+    "/users/{userId}/assignmentGrades/{assignmentId}": {
+      "schema": { "$ref": "#/entities/AssignmentGradesMap" },
+      "description": "Student grade records and feedback per assignment."
+    },
+    "/users/{userId}/monthlyAssessments/{assessmentId}": {
+      "schema": { "$ref": "#/entities/MonthlyAssessmentsMap" },
+      "description": "Monthly exam, homework, and oral participation scores per class and month."
+    },
+    "/users/{userId}/participation/{participationId}": {
+      "schema": { "$ref": "#/entities/ParticipationItem" },
+      "description": "Daily live participation logs per class."
+    },
+    "/users/{userId}/lessonPlans/{lessonId}": {
+      "schema": { "$ref": "#/entities/LessonPlan" },
+      "description": "ELA lesson plans and grammar focus schedules."
+    },
+    "/users/{userId}/lessonProgress/{lessonId}": {
+      "schema": { "$ref": "#/entities/LessonProgressMap" },
+      "description": "Student mastery and exit ticket progress per lesson."
+    },
+    "/users/{userId}/cumulativeProgress/{classId}": {
+      "schema": { "$ref": "#/entities/CumulativeProgressMap" },
+      "description": "Cumulative teacher remarks and goals per class."
+    },
+    "/users/{userId}/grammarExercises/{exerciseId}": {
+      "schema": { "$ref": "#/entities/GrammarExercise" },
+      "description": "Interactive grammar exercise sets."
+    },
+    "/users/{userId}/books/{bookId}": {
+      "schema": { "$ref": "#/entities/BookStudy" },
+      "description": "Literature and book study trackers."
+    },
+    "/users/{userId}/encryptedNotes/{noteId}": {
+      "schema": { "$ref": "#/entities/EncryptedTeacherNote" },
+      "description": "Client-side AES-GCM encrypted confidential teacher notes."
+    },
+    "/users/{userId}/teacherNotes/{noteId}": {
+      "schema": { "$ref": "#/entities/TeacherNote" },
+      "description": "Custom lesson notes, pacing plans, and PDF attachment metadata."
+    },
+    "/users/{userId}/reminders/{reminderId}": {
+      "schema": { "$ref": "#/entities/Reminder" },
+      "description": "Deadline, grading, and exam reminders."
+    }
+  }
+}
